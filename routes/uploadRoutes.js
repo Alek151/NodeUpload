@@ -5,6 +5,7 @@ const csv = require("csv-parser");
 const fs = require("fs");
 const multer = require("multer");
 const { createLogger, transports, format } = require("winston");
+require('dotenv').config();
 
 const router = express.Router();
 
@@ -22,12 +23,11 @@ const logger = createLogger({
 
 // Configuración de la conexión a la base de datos MySQL
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'sistema_inmobiliario'
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_DATABASE || 'sistema_inmobiliario'
 };
-
 // Configuración de `multer` para manejar archivos adjuntos
 const upload = multer({ dest: 'uploads/' });
 
