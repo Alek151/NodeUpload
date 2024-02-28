@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
         // Verificar si se encontró un usuario con el correo electrónico proporcionado
         if (rows.length === 0) {
             return res.status(401).json({
-                error: "Credenciales inválidas. Por favor, inténtelo de nuevo.",
+                error: "No se encontró una cuenta, crea una en el apartado de registro",
             });
         }
 
@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
         // Si la contraseña no coincide, devolver un error de credenciales inválidas
         if (password !== user.password) {
             return res.status(401).json({
-                error: "Credenciales inválidas. Por favor, inténtelo de nuevo.",
+                error: "Correo y/o contraseña incorrectas",
             });
         }
 
