@@ -3,9 +3,7 @@ const jwt = require("jsonwebtoken");
 //const bcrypt = require("bcrypt");
 const mysql = require("mysql2/promise");
 const dbConfig = require("../db/db")
-
 const router = express.Router();
-
 
 // Endpoint para iniciar sesión y obtener un token JWT
 router.post("/login", async (req, res) => {

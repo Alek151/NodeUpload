@@ -8,6 +8,7 @@ const { createLogger, transports, format } = require("winston");
 require("dotenv").config();
 const dbConfig = require("../db/db")
 const router = express.Router();
+const verifyToken = require("../middlewares/authMiddleware")
 
 // Configuración de los logs
 const logger = createLogger({
@@ -111,16 +112,5 @@ router.post(
 );
 
 // Función para verificar el token JWT en el encabezado de la solicitud
-function verifyToken(req, res, next) {
-  const bearerHeader = req.headers["authorization"];
-  if (typeof bearerHeader !== "undefined") {
-    const bearerToken = bearerHeader.split(" ")[1];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403);
-    logger.error("No se ha proporcionado ningún token JWT.");
-  }
-}
 
 module.exports = router;

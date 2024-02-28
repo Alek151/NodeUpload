@@ -3,8 +3,9 @@ const express = require("express");
 require("dotenv").config();
 const router = express.Router();
 const dbConfig = require("../db/db")
+const verifyToken = require("../middlewares/authMiddleware")
 
-router.get("/propiedadesEnArea", async (req, res) => {
+router.get("/propiedadesEnArea",  verifyToken, async (req, res) => {
     try {
         const { latitud, longitud, distancia } = req.query;
 

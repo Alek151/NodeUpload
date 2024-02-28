@@ -3,9 +3,10 @@ const mysql = require("mysql2/promise");
 require('dotenv').config();
 const dbConfig = require("../db/db")
 const router = express.Router();
+const verifyToken = require("../middlewares/authMiddleware")
 
 // Endpoint para calcular el precio promedio del metro cuadrado dentro de un radio de X kilómetros
-router.get("/precioPromedio", async (req, res) => {
+router.get("/precioPromedio", verifyToken, async (req, res) => {
     try {
         const { latitud, longitud, distancia } = req.query;
 
