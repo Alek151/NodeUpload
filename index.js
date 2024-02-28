@@ -4,6 +4,7 @@ const uploadRoutes = require("./routes/uploadRoutes");
 const getData = require("./routes/getData");
 const precioPromedio = require("./routes/precioPromedio")
 const usuario = require("./routes/usuariosCR")
+const propEnArea = require("./routes/propEnArea")
 const port = 3000;
 
 //se realizan cambios existentes
@@ -11,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 // Usar las rutas de autenticación y carga de archivos
-app.use("/api", [authRoutes, uploadRoutes, getData, getData, precioPromedio, usuario]);
+app.use("/api", [authRoutes, uploadRoutes, getData, getData, precioPromedio, usuario, propEnArea]);
 
 
 // Iniciar el servidor en el puerto configurado en el archivo .env o en el puerto 3000 por defecto

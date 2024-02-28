@@ -1,16 +1,7 @@
 const express = require("express");
 const mysql = require("mysql2/promise");
-
+const dbConfig = require("../db/db")
 const router = express.Router();
-
-// Configuración de la conexión a la base de datos MySQL
-const dbConfig = {
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'sistema_inmobiliario',
-    port: process.env.PORT || '44283'
-};
 
 // Endpoint para crear un nuevo usuario
 router.post("/usuarios", async (req, res) => {

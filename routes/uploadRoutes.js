@@ -6,7 +6,7 @@ const fs = require("fs");
 const multer = require("multer");
 const { createLogger, transports, format } = require("winston");
 require("dotenv").config();
-
+const dbConfig = require("../db/db")
 const router = express.Router();
 
 // Configuración de los logs
@@ -16,15 +16,6 @@ const logger = createLogger({
   transports: [new transports.File({ filename: "app.log" })],
 });
 
-// Configuración de la conexión a la base de datos MySQL
-const dbConfig = {
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_DATABASE || "sistema_inmobiliario",
-  port: process.env.PORT || '44283'
-
-};
 // Configuración de `multer` para manejar archivos adjuntos
 const upload = multer({ dest: "uploads/" });
 
@@ -85,7 +76,9 @@ router.post(
                 // Normalizar los nombres de las columnas y asignar valores a las columnas correspondientes
                 for (const [key, value] of Object.entries(row)) {
                   const normalizedKey = normalizeColumnName(key);
-                  normalizedRow[normalizedKey] = value;
+                  // Truncar los valores que excedan los 255 caracteres
+                  const truncatedValue = value.substring(0, 255);
+                  normalizedRow[normalizedKey] = truncatedValue;
                 }
 
                 // Insertar los datos del CSV en la tabla

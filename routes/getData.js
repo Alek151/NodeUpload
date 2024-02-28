@@ -2,16 +2,8 @@ const mysql = require("mysql2/promise");
 const express = require("express");
 const jwt = require("jsonwebtoken"); // Importar jwt
 require("dotenv").config();
+const dbConfig = require("../db/db")
 const router = express.Router();
-
-const dbConfig = {
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "",
-  database: process.env.DB_DATABASE || "sistema_inmobiliario",
-  port: process.env.PORT || '44283'
-
-};
 
 // Middleware para verificar el token JWT
 function verifyToken(req, res, next) {
@@ -30,9 +22,11 @@ function verifyToken(req, res, next) {
     });
   } else {
     res.sendStatus(403); // Forbidden si no se proporciona el token JWT
-    logger.error("No se ha proporcionado ningún token JWT.");
+    console.error("No se ha proporcionado ningún token JWT.");
   }
 }
+
+// Endpoint para filtrar la data, protegido con JWT
 
 // Endpoint para filtrar la data, protegido con JWT
 router.get("/filtrar", verifyToken, async (req, res) => {
@@ -45,17 +39,17 @@ router.get("/filtrar", verifyToken, async (req, res) => {
     const params = [];
 
     if (precioMinimo) {
-      sqlQuery += " AND Precio >= ?";
+      sqlQuery += " AND precio >= ?";
       params.push(precioMinimo);
     }
 
     if (precioMaximo) {
-      sqlQuery += " AND Precio <= ?";
+      sqlQuery += " AND precio <= ?";
       params.push(precioMaximo);
     }
 
     if (numHabitaciones) {
-      sqlQuery += " AND Habitaciones = ?";
+      sqlQuery += " AND habitaciones = ?";
       params.push(numHabitaciones);
     }
 
@@ -71,5 +65,4 @@ router.get("/filtrar", verifyToken, async (req, res) => {
     res.status(500).json({ error: "Error al filtrar la data." });
   }
 });
-
 module.exports = router;
