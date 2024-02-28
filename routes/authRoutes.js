@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+//const bcrypt = require("bcrypt");
 const mysql = require("mysql2/promise");
 
 const router = express.Router();
@@ -43,10 +43,10 @@ router.post("/login", async (req, res) => {
 
         // Verificar la contraseña utilizando bcrypt
         const user = rows[0];
-        const passwordMatch = await bcrypt.compare(password, user.password);
+        //const passwordMatch = await bcrypt.compare(password, user.password);
 
         // Si la contraseña no coincide, devolver un error de credenciales inválidas
-        if (!passwordMatch) {
+        if (password == user.password) {
             return res.status(401).json({
                 error: "Credenciales inválidas. Por favor, inténtelo de nuevo.",
             });

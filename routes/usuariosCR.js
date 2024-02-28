@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const mysql = require("mysql2/promise");
+const { password } = require("../db/db");
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.post("/usuarios", async (req, res) => {
 
     try {
         // Generar el hash de la contraseña
-        const hashedPassword = await bcrypt.hash(password, 10); // El segundo parámetro es el coste del algoritmo de hashing
+        //const hashedPassword = await bcrypt.hash(password, 10); // El segundo parámetro es el coste del algoritmo de hashing
 
         // Conectar a la base de datos
         const connection = await mysql.createConnection(dbConfig);
@@ -34,7 +35,7 @@ router.post("/usuarios", async (req, res) => {
         // Insertar el nuevo usuario en la base de datos con la contraseña encriptada
         await connection.execute(
             'INSERT INTO usuarios (email, password) VALUES (?, ?)',
-            [email, hashedPassword]
+            [email, password]
         );
 
         // Cerrar la conexión
@@ -55,15 +56,15 @@ router.put("/usuarios/:email", async (req, res) => {
 
     try {
         // Generar el hash de la nueva contraseña
-        const hashedPassword = await bcrypt.hash(newPassword, 10); // El segundo parámetro es el coste del algoritmo de hashing
-
+       // const hashedPassword = await bcrypt.hash(newPassword, 10); // El segundo parámetro es el coste del algoritmo de hashing
+        const password = newPassword
         // Conectar a la base de datos
         const connection = await mysql.createConnection(dbConfig);
         
         // Actualizar la contraseña del usuario en la base de datos
         await connection.execute(
             'UPDATE usuarios SET password = ? WHERE email = ?',
-            [hashedPassword, email]
+            [password, email]
         );
 
         // Cerrar la conexión
