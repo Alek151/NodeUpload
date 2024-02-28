@@ -7,11 +7,11 @@ const router = express.Router();
 
 // Configuración de la conexión a la base de datos MySQL
 const dbConfig = {
-    host: process.env.DB_HOST || 'roundhouse.proxy.rlwy.net',
+    host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '1bdeBDCHGaDGhHeBD6GE12a3Dgh-FAd2',
+    password: process.env.DB_PASSWORD || '',
     database: process.env.DB_DATABASE || 'sistema_inmobiliario',
-    port: process.env.PORT || '44283'
+    port: '3306'
 };
 
 // Endpoint para iniciar sesión y obtener un token JWT
@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
         //const passwordMatch = await bcrypt.compare(password, user.password);
 
         // Si la contraseña no coincide, devolver un error de credenciales inválidas
-        if (password == user.password) {
+        if (password !== user.password) {
             return res.status(401).json({
                 error: "Credenciales inválidas. Por favor, inténtelo de nuevo.",
             });
