@@ -7,10 +7,11 @@ const router = express.Router();
 
 // Configuración de la conexión a la base de datos MySQL
 const dbConfig = {
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST || 'roundhouse.proxy.rlwy.net',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'sistema_inmobiliario'
+    password: process.env.DB_PASSWORD || '1bdeBDCHGaDGhHeBD6GE12a3Dgh-FAd2',
+    database: process.env.DB_DATABASE || 'sistema_inmobiliario',
+    port: process.env.PORT || '44283'
 };
 
 // Endpoint para iniciar sesión y obtener un token JWT

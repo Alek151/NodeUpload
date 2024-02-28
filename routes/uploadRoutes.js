@@ -22,6 +22,8 @@ const dbConfig = {
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
   database: process.env.DB_DATABASE || "sistema_inmobiliario",
+  port: process.env.PORT || '44283'
+
 };
 // Configuración de `multer` para manejar archivos adjuntos
 const upload = multer({ dest: "uploads/" });
