@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { email: email },
             "secretKey",
-            { expiresIn: "300s" }
+            { expiresIn: "3000s" }
         );
 
         // Devolver el token JWT al cliente
