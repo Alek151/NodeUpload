@@ -37,11 +37,11 @@ router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
             params.push(latitud, longitud, distancia);
         }
         if (balcon) {
-            sqlQuery += ` AND balcon = ?`;
+            sqlQuery += ` AND balc_n = ?`;
             params.push(balcon);
         }
         if (petFriendly) {
-            sqlQuery += ` AND pet_friendly = ?`;
+            sqlQuery += ` AND se_admiten_mascotas = ?`;
             params.push(petFriendly);
         }
         if (piscina) {
@@ -49,7 +49,7 @@ router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
             params.push(piscina);
         }
         if (jardin) {
-            sqlQuery += ` AND jardin = ?`;
+            sqlQuery += ` AND jard_n = ?`;
             params.push(jardin);
         }
 
