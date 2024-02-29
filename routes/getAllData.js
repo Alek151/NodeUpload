@@ -9,6 +9,7 @@ const verifyToken = require("../middlewares/authMiddleware");
 router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
     try {
         // Obtener los parámetros de consulta
+        console.log(req.query)
         const { habitaciones, precioMin, precioMax, latitud, longitud, distancia, balc_n, se_admiten_mascotas, piscina, jard_n } = req.query;
 
         // Construir la consulta SQL para obtener propiedades filtradas
@@ -38,11 +39,11 @@ router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
         }
         if (balc_n) {
             sqlQuery += ` AND balc_n = ?`;
-            params.push(balcon);
+            params.push(balc_n);
         }
         if (se_admiten_mascotas) {
             sqlQuery += ` AND se_admiten_mascotas = ?`;
-            params.push(petFriendly);
+            params.push(se_admiten_mascotas);
         }
         if (piscina) {
             sqlQuery += ` AND piscina = ?`;
@@ -50,7 +51,7 @@ router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
         }
         if (jard_n) {
             sqlQuery += ` AND jard_n = ?`;
-            params.push(jardin);
+            params.push(jard_n);
         }
 
         // Ejecutar la consulta en la base de datos
