@@ -9,7 +9,7 @@ const verifyToken = require("../middlewares/authMiddleware");
 router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
     try {
         // Obtener los parámetros de consulta
-        const { habitaciones, precioMin, precioMax, latitud, longitud, distancia, balcon, petFriendly, piscina, jardin } = req.query;
+        const { habitaciones, precioMin, precioMax, latitud, longitud, distancia, balc_n, se_admiten_mascotas, piscina, jard_n } = req.query;
 
         // Construir la consulta SQL para obtener propiedades filtradas
         let sqlQuery = `
@@ -36,11 +36,11 @@ router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
             sqlQuery += ` AND SQRT(POW(69.1 * (latitud - ?), 2) + POW(69.1 * (? - longitud) * COS(latitud / 57.3), 2)) <= ?`;
             params.push(latitud, longitud, distancia);
         }
-        if (balcon) {
+        if (balc_n) {
             sqlQuery += ` AND balc_n = ?`;
             params.push(balcon);
         }
-        if (petFriendly) {
+        if (se_admiten_mascotas) {
             sqlQuery += ` AND se_admiten_mascotas = ?`;
             params.push(petFriendly);
         }
@@ -48,7 +48,7 @@ router.get("/propiedadesFiltradas", verifyToken, async (req, res) => {
             sqlQuery += ` AND piscina = ?`;
             params.push(piscina);
         }
-        if (jardin) {
+        if (jard_n) {
             sqlQuery += ` AND jard_n = ?`;
             params.push(jardin);
         }
