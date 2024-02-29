@@ -52,7 +52,7 @@ router.post("/login", async (req, res) => {
         );
 
         // Devolver el token JWT al cliente
-        res.json({ token: token });
+        res.json({ "usuario": user.email, token: token });
 
     } catch (error) {
         console.error("Error al autenticar al usuario:", error);
