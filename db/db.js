@@ -12,11 +12,11 @@ const dbConfig = {
 // Configuración de la conexión a la base de datos MySQL
 
 const dbConfig = {
-    host: 'viaduct.proxy.rlwy.net',
+    host: 'roundhouse.proxy.rlwy.net',
     user: 'root',
-    password: 'f3652AH34BGdb2c-Bc3E2dgH4DH-4E-a',
+    password: 'a-FdaB1G3Ad-d6fe463gH3DGG-Ef4gA5',
     database:'railway',
-    port: '30384'
+    port: '22459'
 };
 
 
