@@ -1,7 +1,22 @@
 const express = require("express");
 const mysql = require("mysql2/promise");
-const dbConfig = require("../db/db")
+const dbConfig = require("../db/db");
 const router = express.Router();
+
+// Función para verificar si la tabla usuarios existe
+async function verificarTablaUsuarios(connection) {
+    const [rows, fields] = await connection.execute(
+        "SHOW TABLES LIKE 'usuarios'"
+    );
+    return rows.length > 0;
+}
+
+// Función para crear la tabla usuarios si no existe
+async function crearTablaUsuarios(connection) {
+    await connection.execute(
+        "CREATE TABLE usuarios (id INT AUTO_INCREMENT PRIMARY KEY, email VARCHAR(255) UNIQUE NOT NULL, password VARCHAR(255) NOT NULL)"
+    );
+}
 
 // Endpoint para crear un nuevo usuario
 router.post("/usuarios", async (req, res) => {
@@ -15,13 +30,18 @@ router.post("/usuarios", async (req, res) => {
     }
 
     try {
-        // Generar el hash de la contraseña
-        //const hashedPassword = await bcrypt.hash(password, 10); // El segundo parámetro es el coste del algoritmo de hashing
-
         // Conectar a la base de datos
         const connection = await mysql.createConnection(dbConfig);
-        
-        // Insertar el nuevo usuario en la base de datos con la contraseña encriptada
+
+        // Verificar si la tabla usuarios existe
+        const tablaUsuariosExiste = await verificarTablaUsuarios(connection);
+
+        // Si la tabla no existe, crearla
+        if (!tablaUsuariosExiste) {
+            await crearTablaUsuarios(connection);
+        }
+
+        // Insertar el nuevo usuario en la base de datos
         await connection.execute(
             'INSERT INTO usuarios (email, password) VALUES (?, ?)',
             [email, password]
@@ -44,16 +64,21 @@ router.put("/usuarios/:email", async (req, res) => {
     const { newPassword } = req.body;
 
     try {
-        // Generar el hash de la nueva contraseña
-       // const hashedPassword = await bcrypt.hash(newPassword, 10); // El segundo parámetro es el coste del algoritmo de hashing
-        const password = newPassword
         // Conectar a la base de datos
         const connection = await mysql.createConnection(dbConfig);
-        
+
+        // Verificar si la tabla usuarios existe
+        const tablaUsuariosExiste = await verificarTablaUsuarios(connection);
+
+        // Si la tabla no existe, retornar un error
+        if (!tablaUsuariosExiste) {
+            return res.status(404).json({ error: "La tabla usuarios no existe." });
+        }
+
         // Actualizar la contraseña del usuario en la base de datos
         await connection.execute(
             'UPDATE usuarios SET password = ? WHERE email = ?',
-            [password, email]
+            [newPassword, email]
         );
 
         // Cerrar la conexión
