@@ -14,9 +14,9 @@ const dbConfig = {
 const dbConfig = {
     host: 'roundhouse.proxy.rlwy.net',
     user: 'root',
-    password: 'a-FdaB1G3Ad-d6fe463gH3DGG-Ef4gA5',
+    password: 'A2f3FF5g---HCCd6DDB-h4cHffBEfE2H',
     database:'railway',
-    port: '22459'
+    port: '29115'
 };
 
 
